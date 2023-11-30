@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    /> -->
+    <title>Orions Control Centre</title>
+    <link rel = "stylesheet" href = "./bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel = "stylesheet" href = "./css/styles.css" />
+    <link rel="stylesheet" href="leaflet/leaflet.css" />
+  </head>
+  <body>
+    <div id="wrapper">
+        <aside id="sidebar-wrapper">
+            <div class="sidebar-brand">
+              <img src="./assests/img/b.svg" alt="" class="mplogo">
+            </div>
+            
+            <ul class="sidebar-nav">
+              <li class="active">
+                <a href="index.html"><img class="menu-icon" src="./assests/fontawesome-free-6.1.2-desktop/svgs/solid/wave-square.svg"></img>Live</a>
+              </li>
+              <li>
+                <a href="./html/video-archive.html" id="archive-btn"><img class="menu-icon" src="./assests/fontawesome-free-6.1.2-desktop/svgs/solid/wave-square.svg"></img>Video Archive</a>
+              </li>
+              <li>
+                <a href="./html/incident-archive.html"><img class="menu-icon" src="./assests/fontawesome-free-6.1.2-desktop/svgs/solid/wave-square.svg"></img>Incident Archive</a>
+              </li>
+              <li>
+                <a href="./html/manual.html"><img class="menu-icon" src="./assests/fontawesome-free-6.1.2-desktop/svgs/solid/wave-square.svg"></img>Analytics</a>
+              </li>
+            </ul>
+            <div class="sidebar-map">
+                <div id="map" class=""></div>
+            </div>
+            
+            <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"> -->
+          </aside>
+
+          <div class="navbar">
+            <nav>
+        
+                <div class="outline">
+                    
+                    <ul>
+                        <div class="left">
+        
+                            <li id="displayDate">19 Aug 2022</li>
+                            <li>
+                                <form action="/">
+                                    <select name="city" id="city">
+                                      <option value="Railway Station">Railway Station</option>
+                                      <option value="Ashok Vihar">Ashok Vihar</option>
+                                      <option value="Maharana Pratap Nagar">Maharana Pratap Nagar</option>
+                                      <option value="Hamidia Road">Hamidia Road</option>
+                                      <option value="Arera Colony">Arera Colony</option>
+                                      <option value="Kolar Road">Kolar Road</option>
+                                    </select>
+                                  </form>
+                            </li>
+                            <li id="displayTime">16:00 PM</li>
+                            <li id="calendar">
+                              <img src="assests/logos/calendar.png" id="calendarIcon" alt="" onclick="openCalendar()">
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <!-- Navbar and Sidebar end -->
+
+        <!-- Main Content Starts -->
+        <section id="content-wrapper" class="gradient-border"> 
+            <div class="contents">
+                <div class="left-content">
+                    <div class="left-content-box">
+                        <div class="highlight-video">
+                          <!-- <video width="100%" height="300px" controls autoplay>
+                            <source src="file:///C:/Users/shamb/Desktop/SIH/FinalApp/assests/videos/vid.mp4" type="video/mp4">
+                          </video> -->
+                          <div style="width: 100%;;height:300px;">
+                            <iframe id="highlightVideo" src="https://streamable.com/e/cmj66b?autoplay=1" frameborder="10px" width="100%" height="100%" allowfullscreen allow="autoplay" style="width:100%;height:100%;left:0px;top:0px;overflow:hidden;">
+                            </iframe>
+                          </div>
+                          <!-- <img id="highlight-video" src="assests/videos/main-trace.gif" alt=""> -->
+                          <!-- <div style="width:100%;height:300px;position:relative;"><iframe src="https://player.vimeo.com/video/741557931?h=69cff27176&amp;badge=0&amp;autoplay=1&amp;loop=1&amp;autopause=0&amp;background=1&amp;mute=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay;" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="1_2.mp4"></iframe></div> -->
+                        </div>
+                        <div class="highlight-info">
+                            <div class="info">Latitude: <span id="latitude">23.259° N</span></div>
+                            <div class="info">Longitude: <span id="longitude">77.412° E</span></div>
+                            <div class="info">Alert: <span id="alert">Criminal Detection</span></div>
+                        </div>
+                        <div class="btn-graph">
+                          <div class="highlight-btn">
+                            <div class="btn-row">
+                                <a onclick="callAll()" class="custom-btn btn-3" id="btn-all"><span>All</span></a>
+                                <a onclick="callFire()" class="custom-btn btn-3" id="btn-fire"><span>Fire Alert</span></a>
+                                <a onclick="callAmbulance()" class="custom-btn btn-3" id="btn-ambulance"><span>Ambulance</span></a>
+                                <a onclick="callPolice()" class="custom-btn btn-3" id="btn-police"><span>Call Police</span></a>
+                            </div>
+
+                            <div class="btn-row">
+                                <a href="./html/map.html" target="_blank" class="custom-btn btn-3" id="btn-locate"><span>Locate</span></a>
+                                <a onclick="changeHighlight()" class="custom-btn btn-3" id="btn-change-view"><span>Change View</span></a>
+                                <a onclick="changeHighlight()" class="custom-btn btn-3" id="btn-ignore"><span>Ignore</span></a>
+                                <a onclick="alert('Data Saved Successfully!')" class="custom-btn btn-3" id="btn-save"><span>Save Video</span></a>
+                            </div>
+                        </div>
+                        <div class="mini-console graph">
+                          <div class="mini-console-text" id="video-status">Monitoring...</div>
+                        </div>
+                        </div>
+                        
+                    </div>                  
+                </div>
+                <div class="right-content">
+                    <div class="level-1-videos" id="style-3">
+                        <div class="video-row">
+                          <div class="live-video">
+                            <!-- <video width="160" height="80" controls loop autoplay muted class="vid">
+                              <source src="assests/videos/mesh_animation-484cab1266803f8a131afb58410f0826.webm" type="video/webm">
+                            </video> -->
+                            <!-- <img src="./assests/videos/10.gif" alt=""> -->
+
+                            <!-- <div style="width:160px;height:80px;position:relative;"><iframe src="https://player.vimeo.com/video/741499552?h=97343eae03&amp;badge=0&amp;autoplay=1&amp;loop=1&amp;autopause=0&amp;background=1&amp;mute=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay;" style="position:absolute;top:0;left:0;width:100%;height:100%;" title="1_2.mp4"></iframe></div> -->
+                            <!-- <iframe width="160" height="80"
+                              src="https://www.youtube.com/embed/DA38XLKXniw?controls=0&autoplay=1&loop=1">
+                            </iframe> -->
+                            <img src="./assests/videos/img10.webp" alt="">
+                          </div>
+                          <div class="live-video">
+                            <!-- <video width="160" height="80" controls autoplay muted class="vid">
+                              <source src="./assests/videos/1.mp4" type="video/mp4">
+                            </video> -->
+                            <!-- <iframe width="160" height="80"
+                              src="https://www.youtube.com/embed/AxTiLjEbWDM?controls=0&autoplay=1&loop=1">
+                            </iframe> -->
+                            <!-- <img src="./assests/videos/3.gif" alt=""> -->
+                            <img src="./assests/videos/img13.webp" alt="">
+                          </div>
+                          <div class="live-video">
+                            
+                            <img src="./assests/videos/railway.gif" alt="">
+                          </div>
+                          <div class="live-video">
+                            <img src="./assests/videos/img14.webp" alt="">
+                          </div>
+                        </div>
+
+                        <div class="video-row">
+                          <div class="live-video">
+                            <!-- <img src="./assests/videos/5.gif" alt=""> -->
+                            <img src="./assests/videos/img4.webp" alt="">
+
+                          </div>
+                          <div class="live-video">
+                            <!-- <img src="./assests/videos/9.gif" alt=""> -->
+                            <img src="./assests/videos/img6.webp" alt="">
+                          </div>
+                          <div class="live-video">
+                            <img src="./assests/videos/1_2.gif" alt="">
+                          </div>
+                          <div class="live-video">
+                            <img src="./assests/videos/crime.gif" alt="">
+                          </div>
+                        </div>
+
+                        <div class="video-row">
+                          <div class="live-video">
+                            <!-- <img src="./assests/videos/3.gif" alt=""> -->
+                            <img src="./assests/videos/img8.webp" alt="">
+
+                          </div>
+                          <div class="live-video">
+                            <!-- <img src="./assests/videos/3.gif" alt=""> -->
+                            <img src="./assests/videos/imag5.webp" alt="">
+                          </div>
+                          <div class="live-video">
+                            <!-- <img src="./assests/videos/3.gif" alt=""> -->
+                            <img src="./assests/videos/image3.gif" alt="">
+                          </div>
+                          <div class="live-video">
+                            <!-- <img src="./assests/videos/3.gif" alt=""> -->
+                            <img src="./assests/videos/img10.webp" alt="">
+                          </div>
+                        </div>
+
+                        <div class="video-row">
+                          <div class="live-video">
+                            <!-- <img src="./assests/videos/3.gif" alt=""> -->
+                            <img src="./assests/videos/img9.webp" alt="">
+
+                          </div>
+                          <div class="live-video">
+                            <img src="./assests/videos/new1.gif" alt="">
+                          </div>
+                          <div class="live-video">
+                            <img src="./assests/videos/new2.gif" alt="">
+                          </div>
+                          <div class="live-video">
+                            <img src="./assests/videos/new3.gif" alt="">
+                          </div>
+                        </div>
+
+                        <div class="video-row">
+                          <div class="live-video">
+                            <img src="./assests/videos/new11.webp" alt="">
+
+                          </div>
+                          <div class="live-video">
+                            <img src="./assests/videos/new12.gif" alt="">
+                          </div>
+                          <div class="live-video">
+                            <img src="./assests/videos/new13.gif" alt="">
+                          </div>
+                          <div class="live-video">
+                            <img src="./assests/videos/new14.gif" alt="">
+                          </div>
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Main Content Ends -->
+
+        <!-- Footer Starts -->
+        <div class="console-panel">
+            <div class="left-panel">
+                <div class="console-head">Console</div>
+                <div class="console" id="console">
+                    <!-- <code class="code-lines white">Initializing...</code>
+                    <code class="code-lines green">0.0002ms ok!</code> -->
+                    <div class="code-block" id="conAlert-1">
+                      <code class="white">$ ~ </code>
+                      <code class="">Level-1 Alert!</code>
+                      <code class="code-info">
+                        <code class="code-lines yellow">Latitude: 23.259° N | Longitude: 77.412° E | Alert: <span class="red">Govt. Prop Damage</span> | <a class="view-link" onclick="changeView()">View</a></code>
+                      </code>
+                    </div>         
+        
+                    <div class="code-block" id="conAlert-2">
+                      <code class="white">$ ~ </code>
+                      <code class="">Level-1 Alert!</code>
+                      <code class="code-info">
+                        <code class="code-lines yellow">Latitude: 23.259° N | Longitude: 77.412° E | Alert: <span class="red">Crowd Detected</span> | <a class="view-link" onclick="changeView()">View</a></code>
+                      </code>
+                    </div>
+
+                    <div class="code-block"  id="conAlert-3">
+                    </div>
+
+                    <div class="code-block" id="conAlert-4">
+                      <code class="white">$ ~ </code>
+                      <code class="">Level-1 Alert!</code>
+                      <code class="code-info">
+                        <code class="code-lines yellow">Latitude: 17.59° N | Longitude: 23.42° E | Alert: <span class="red">Suspected Voilence</span> | <a class="view-link" onclick="changeView()">View</a></code>
+                      </code>
+                    </div>
+
+                    <div class="code-block" id="conAlert-5">
+                      <code class="white">$ ~ </code>
+                      <code class="">Level-1 Alert!</code>
+                      <code class="code-info">
+                        <code class="code-lines yellow">Latitude: 65.17° N | Longitude: 20.21° E | Alert: <span class="red">Crowd Alert!</span> | <a class="view-link" onclick="changeView()">View</a></code>
+                      </code>
+                    </div>
+
+                    <div class="code-block" id="conAlert-6">
+                      <code class="white">$ ~ </code>
+                      <code class="">Level-<span id="conLevel">2</span> Alert!</code>
+                      <code class="code-info">
+                        <code class="code-lines yellow">Latitude: <span id="conLat">35.01° N</span> | Longitude: <span id="conLong">43.14° E</span> | Alert: <span class="red" id="conAlert">Weapon Detected!</span></code>
+                      </code>
+                    </div>
+
+                    <div class="code-block" id="conAlert-7">
+                      <code class="white">$ ~ </code>
+                      <code class="">Level-1 Alert!</code>
+                      <code class="code-info">
+                        <code class="code-lines yellow">Latitude: 36.92° N | Longitude: 89.52° E | Alert: <span class="red">Suspected Thievery</span> | <a class="view-link" onclick="changeView()">View</a></code>
+                      </code>
+                    </div>
+
+                    <div class="code-block" id="conAlert-8">
+                      <code class="white">$ ~ </code>
+                      <code class="">Level-1 Alert!</code>
+                      <code class="code-info">
+                        <code class="code-lines yellow">Latitude: 36.92° N | Longitude: 89.52° E | Alert: <span class="red">Abuse Detected</span> | <a class="view-link" onclick="changeView()">View</a></code>
+                      </code>
+                    </div>
+
+                    <div class="code-block" id="conAlert-9">
+                      <code class="white">$ ~ </code>
+                      <code class="">Level-1 Alert!</code>
+                      <code class="code-info">
+                        <code class="code-lines yellow">Latitude: 36.92° N | Longitude: 89.52° E | Alert: <span class="red">Fight Initiated!</span> | <a class="view-link" onclick="changeView()">View</a></code>
+                      </code>
+                    </div>
+
+                  </div>
+            </div>
+            <div class="right-panel">
+                <div class="console-head">Analytics</div>
+                <div class="console-analytics">
+                  <table class="ana-table">
+                    <tr>
+                      <th>Reports Generated</th>
+                      <th>Download Links</th>
+                    </tr>
+                    <tr>
+                      <td>Day</td>
+                      <td><a href="./assests/HOURLY ANALYSIS.pdf" target="_blank">View Analysis</a></td>
+                    </tr>
+                    <tr>
+                      <td>Week</td>
+                      <td><a href="./assests/WEEKLY ANALYTICS.pdf" target="_blank">View Analysis</a></td>
+                    </tr>
+                    <tr>
+                      <td>Month</td>
+                      <td><a href="./assests/MONTHLY ANALYSIS.pdf" target="_blank">View Analysis</a></td>
+            
+                    </tr>
+                    
+                  </table>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Ends -->
+        
+    </div>
+
+  </body>
+    <script src="./renderer.js"></script>
+    <script src="leaflet/leaflet.js"></script>
+    <script src="./js/map.js"></script>
+</html>
